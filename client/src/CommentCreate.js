@@ -1,12 +1,31 @@
 /* eslint-disable import/no-anonymous-default-export */
-import React from 'react';
+import axios from 'axios';
+import React, {useState} from 'react';
 
 export default () => {
+	const [content, setContent] = useState('');
+
+	const onSubmit = async (event) => {
+		event.preventDefault();
+
+		await axios.post('http://localhost:4001/posts//comments', {content});
+		setContent('');
+	};
 	return (
-		<form>
-			<label>Comment</label>
-			<input></input>
-			<button>Submit</button>
-		</form>
+		<div>
+			<form onSubmit={onSubmit}>
+				<div className='form-group'>
+					<label>Comment</label>
+					<input
+						value={content}
+						onChange={(e) => {
+							setContent(e.target.value);
+						}}
+						className='form-control'
+					></input>
+					<button className='btn btn-primary'>Submit</button>
+				</div>
+			</form>
+		</div>
 	);
 };
