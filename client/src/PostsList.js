@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
+import CommentsList from './commentsList';
 
 export default () => {
 	const [posts, setPosts] = useState({});
@@ -24,6 +25,7 @@ export default () => {
 			>
 				<div className='card-body'>
 					<h3>{post.title}</h3>
+					<CommentsList />
 				</div>
 			</div>
 		);
