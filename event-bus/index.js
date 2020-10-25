@@ -6,17 +6,18 @@ const app = express();
 app.use(bodyParser.json());
 
 const events = [];
-
-app.post('/events', (req, res) => {
-	const event = req.body;
-	console.log('4005 Received Event : ' + event.type);
-
+const syncEvent = (event) => {
 	events.push(event);
-
 	axios.post('http://localhost:4000/events', event); // for post
 	axios.post('http://localhost:4001/events', event); // for comment
 	axios.post('http://localhost:4002/events', event); // for query
 	axios.post('http://localhost:4003/events', event); // for moderation
+};
+
+app.post('/events', (req, res) => {
+	const event = req.body;
+	console.log('4005 Received Event : ' + event.type);
+	syncEvent(event);
 
 	res.send({status: 'OK'});
 });
@@ -25,6 +26,31 @@ app.get('/events', (req, res) => {
 	res.send(events);
 });
 
-app.listen(4005, () => {
+app.listen(4005, async () => {
 	console.log('Listening on : 4005');
+
+	const postIds = [];
+	for (let event in events) {
+		if (event.type === 'PostCreated') {
+			postIds.push(event.data.id);
+		}
+	}
+
+	const posts = await axios.get('http://localhost:4000/posts');
+
+	Object.values(posts.data).map((post) => {
+		if (
+			!postIds.some((p) => {
+				p.id === post.id;
+			})
+		) {
+			syncEvent({
+				type: 'PostCreated',
+				data: {
+					id: post.id,
+					title: post.title,
+				},
+			});
+		}
+	});
 });
