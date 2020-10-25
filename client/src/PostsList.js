@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
+import CommentCreate from './CommentCreate';
 import CommentsList from './CommentsList';
 
 export default () => {
@@ -26,6 +27,7 @@ export default () => {
 				<div className='card-body'>
 					<h3>{post.title}</h3>
 					<CommentsList postId={post.id} />
+					<CommentCreate postId={post.id} />
 				</div>
 			</div>
 		);
