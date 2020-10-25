@@ -23,7 +23,10 @@ app.post('/posts/:id/comments', (req, res) => {
 	comments.push({
 		id: commentId,
 		content,
+		status: 'pending',
 	});
+
+	commentsByPostId[req.params.id] = comments;
 
 	axios.post('http://localhost:4005/events', {
 		type: 'CommentCreated',
@@ -31,6 +34,7 @@ app.post('/posts/:id/comments', (req, res) => {
 			id: commentId,
 			content,
 			postId: req.params.id,
+			status: 'pending',
 		},
 	});
 
@@ -40,7 +44,7 @@ app.post('/posts/:id/comments', (req, res) => {
 });
 
 app.post('/events', (req, res) => {
-	console.log('Received Event: ', req.body.type);
+	console.log('4001 Received Event: ', req.body.type);
 
 	res.send({});
 });

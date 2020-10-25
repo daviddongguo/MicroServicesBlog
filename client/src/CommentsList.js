@@ -22,7 +22,14 @@ export default ({comments}) => {
 	// console.log(comments);
 
 	const renderedComments = comments.map((comment) => {
-		return <li key={comment.id}>{comment.content}</li>;
+		if (comment.status === 'approved') {
+			return <li key={comment.id}>{comment.content}</li>;
+		}
+		return (
+			<li key={comment.id}>
+				{comment.content} is {comment.status}
+			</li>
+		);
 	});
 
 	return (
