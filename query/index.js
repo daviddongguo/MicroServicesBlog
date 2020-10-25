@@ -25,15 +25,14 @@ app.post('/events', (req, res) => {
 		const post = posts[postId];
 		post.comments.push({id, content, status});
 	}
-	if (type === 'CommentModerated') {
-		console.log('4002 CommentModerated: ' + data);
-		const {id, postId, status} = data;
-		const post = posts[postId];
-		post.comments.map((comment) => {
-			if (comment.id === id) {
-				comment.status = status;
-			}
+	if (type === 'CommentUpdated') {
+		console.log('4002 CommentUpdated: ' + data.status);
+		const {id, postId, content, status} = data;
+		const comment = posts[postId].comments.find((c) => {
+			return c.id === id;
 		});
+		comment.status = status;
+		comment.content = content;
 	}
 
 	res.send({});

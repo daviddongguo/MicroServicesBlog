@@ -6,6 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/events', (req, res) => {
+	console.log('4003 received event : ' + req.body.type);
 	const {type, data} = req.body;
 	if (type === 'CommentCreated') {
 		const status = data.content.includes('orange') ? 'rejected' : 'approved';
@@ -20,6 +21,7 @@ app.post('/events', (req, res) => {
 			},
 		});
 	}
+	res.send({});
 });
 
 app.listen(4003, () => {
