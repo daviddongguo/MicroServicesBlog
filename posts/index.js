@@ -55,7 +55,7 @@ app.listen(4000, async () => {
 	const res = await axios.get('http://localhost:4005/events');
 
 	for (let event of res.data) {
-		console.log('4000 received event : ' + event);
+		console.log('4000 Sync Post : ' + event.type + ' : ' + event.data.title);
 		if (event.type === 'PostCreated') {
 			const post = event.data;
 			if (

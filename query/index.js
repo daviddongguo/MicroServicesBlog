@@ -14,7 +14,6 @@ const handleEvent = (type, data) => {
 		const {id, title} = data;
 		const comments = [];
 		posts[id] = {id, title, comments};
-		console.log('Inside handleEvent :' + posts[id].title);
 	}
 	if (type === 'CommentCreated') {
 		const {id, content, postId, status} = data;
@@ -47,10 +46,8 @@ app.listen(4002, async () => {
 	console.log('Listening on 4002');
 
 	const res = await axios.get('http://localhost:4005/events');
-	console.log('4002 Received Events :');
 	for (let event of res.data) {
+		console.log('4002 Sync event : ' + event.type + ' : ' + event.data.id);
 		handleEvent(event.type, event.data);
-		console.log('4002 Processing event : ' + event.type);
 	}
-	console.log('end of for loop');
 });

@@ -44,6 +44,7 @@ app.listen(4005, async () => {
 				p.id === post.id;
 			})
 		) {
+			console.log('4005 Sync post : ' + post.title);
 			syncEvent({
 				type: 'PostCreated',
 				data: {
