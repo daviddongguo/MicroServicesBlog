@@ -1,25 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable import/no-anonymous-default-export */
-import Axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
-export default ({postId}) => {
-	console.log('Inside CommentsList, postId: ' + postId);
-	const [comments, setComments] = useState([]);
+export default ({comments}) => {
+	// const [comments, setComments] = useState([]);
 
-	const fetchComments = async () => {
-		const res = await Axios.get(
-			'http://localhost:4001/posts/' + postId + '/comments'
-		);
-		console.log('comments result: ' + res.data);
-		console.log(res.data);
+	// const fetchComments = async () => {
+	// 	const res = await Axios.get(
+	// 		'http://localhost:4001/posts/' + postId + '/comments'
+	// 	);
+	// 	console.log('comments result: ' + res.data);
+	// 	console.log(res.data);
 
-		setComments(res.data);
-	};
+	// 	setComments(res.data);
+	// };
 
-	useEffect(() => {
-		fetchComments();
-	}, []);
+	// useEffect(() => {
+	// 	fetchComments();
+	// }, []);
 
 	// console.log(comments);
 
