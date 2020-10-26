@@ -36,6 +36,8 @@ app.listen(4005, async () => {
 		}
 	}
 
+	//TODO: pull posts from 4000 save locally
+	// and push those posts that didn't exist in 4002
 	const posts = await axios.get('http://localhost:4000/posts');
 
 	Object.values(posts.data).map((post) => {
@@ -44,14 +46,15 @@ app.listen(4005, async () => {
 				p.id === post.id;
 			})
 		) {
-			console.log('4005 Sync post : ' + post.title);
-			syncEvent({
+			const event = {
 				type: 'PostCreated',
 				data: {
 					id: post.id,
 					title: post.title,
 				},
-			});
+			};
+			events.push(event);
+			console.log('4005 Sync post : ' + post.title);
 		}
 	});
 });

@@ -47,7 +47,7 @@ app.listen(4002, async () => {
 
 	const res = await axios.get('http://localhost:4005/events');
 	for (let event of res.data) {
-		console.log('4002 Sync event : ' + event.type + ' : ' + event.data.id);
+		console.log('4002 Sync event : ' + event.type + ' : ' + event.data);
 		handleEvent(event.type, event.data);
 	}
 });
