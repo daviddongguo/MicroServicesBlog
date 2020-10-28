@@ -52,22 +52,29 @@ app.listen(4000, async () => {
 		postIds.push[post.id];
 	});
 
-	const res = await axios.get('http://localhost:4005/events');
-
-	for (let event of res.data) {
-		console.log('4000 Sync Post : ' + event.type + ' : ' + event.data.title);
-		if (event.type === 'PostCreated') {
-			const post = event.data;
-			if (
-				!postIds.some((p) => {
-					p === post.id;
-				})
-			) {
-				posts[post.id] = {
-					id: post.id,
-					title: post.title,
-				};
+	axios
+		.get('http://localhost:4005/events')
+		.then((res) => {
+			for (let event of res.data) {
+				console.log(
+					'4000 Sync Post : ' + event.type + ' : ' + event.data.title
+				);
+				if (event.type === 'PostCreated') {
+					const post = event.data;
+					if (
+						!postIds.some((p) => {
+							p === post.id;
+						})
+					) {
+						posts[post.id] = {
+							id: post.id,
+							title: post.title,
+						};
+					}
+				}
 			}
-		}
-	}
+		})
+		.catch((err) => {
+			console.log('connecting 4005 fail');
+		});
 });
