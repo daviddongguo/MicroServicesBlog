@@ -9,10 +9,10 @@ const events = [];
 const syncEvent = (event) => {
 	events.push(event);
 	try {
-		axios.post('http://localhost:4000/events', event); // for post
-		axios.post('http://localhost:4001/events', event); // for comment
-		axios.post('http://localhost:4002/events', event); // for query
-		axios.post('http://localhost:4003/events', event); // for moderation
+		axios.post('http://posts-clusterip-srv:4000/events', event); // for post
+		// axios.post('http://localhost:4001/events', event); // for comment
+		// axios.post('http://localhost:4002/events', event); // for query
+		// axios.post('http://localhost:4003/events', event); // for moderation
 	} catch (err) {
 		console.log('some service can not be connected.');
 	}
@@ -44,7 +44,8 @@ app.listen(4005, async () => {
 	// and push those posts that didn't exist in 4002
 	// const posts = await axios.get('http://localhost:4000/posts');
 	axios
-		.get('http://localhost:4000/posts')
+		//.get('http://localhost:4000/posts')
+		.get('http://event-clusterip-srv:4000/posts')
 		.then((posts) => {
 			if (posts) {
 				posts.data.map((post) => {
