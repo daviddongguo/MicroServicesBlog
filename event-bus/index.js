@@ -10,9 +10,9 @@ const syncEvent = (event) => {
 	events.push(event);
 	try {
 		axios.post('http://posts-clusterip-srv:4000/events', event); // for post
-		axios.post('http://localhost:4001/events', event); // for comment
-		axios.post('http://localhost:4002/events', event); // for query
-		axios.post('http://localhost:4003/events', event); // for moderation
+		axios.post('http://comments-clusterip-srv:4001/events', event); // for comment
+		axios.post('http://query-clusterip-srv:4002/events', event); // for query
+		axios.post('http://moderation-clusterip-srv:4003/events', event); // for moderation
 	} catch (err) {
 		console.log('some service can not be connected.');
 	}
