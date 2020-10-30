@@ -24,7 +24,6 @@ app.post('/posts', async (req, res) => {
 	};
 
 	// Save in Event Bus
-	//await axios.post('http://localhost:4005/events', {
 	await axios.post('http://event-bus-srv:4005/events', {
 		type: 'PostCreated',
 		data: {
@@ -54,7 +53,7 @@ app.listen(4000, async () => {
 	});
 
 	axios
-		.get('http://localhost:4005/events')
+		.get('http://event-bus-srv:4005/events')
 		.then((res) => {
 			for (let event of res.data) {
 				console.log(

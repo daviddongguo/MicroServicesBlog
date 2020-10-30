@@ -8,7 +8,7 @@ const moderate = (type, data) => {
 	if (type === 'CommentCreated') {
 		const status = data.content.includes('orange') ? 'rejected' : 'approved';
 
-		axios.post('http://localhost:4005/events', {
+		axios.post('http://event-bus-srv:4005/events', {
 			type: 'CommentModerated',
 			data: {
 				id: data.id,
@@ -31,7 +31,7 @@ app.post('/events', (req, res) => {
 app.listen(4003, async () => {
 	console.log('Listening on 4003');
 
-	const res = await axios.get('http://localhost:4005/events');
+	const res = await axios.get('http://event-bus-srv:4005/events');
 	console.log('4003 Received Events :');
 	for (let event of res.data) {
 		moderate(event.type, event.data);
