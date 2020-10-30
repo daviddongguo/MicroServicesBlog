@@ -8,10 +8,14 @@ app.use(bodyParser.json());
 const events = [];
 const syncEvent = (event) => {
 	events.push(event);
-	axios.post('http://localhost:4000/events', event); // for post
-	axios.post('http://localhost:4001/events', event); // for comment
-	axios.post('http://localhost:4002/events', event); // for query
-	axios.post('http://localhost:4003/events', event); // for moderation
+	try {
+		axios.post('http://localhost:4000/events', event); // for post
+		axios.post('http://localhost:4001/events', event); // for comment
+		axios.post('http://localhost:4002/events', event); // for query
+		axios.post('http://localhost:4003/events', event); // for moderation
+	} catch (err) {
+		console.log('some service can not be connected.');
+	}
 };
 
 app.post('/events', (req, res) => {
@@ -38,23 +42,31 @@ app.listen(4005, async () => {
 
 	//TODO: pull posts from 4000 save locally
 	// and push those posts that didn't exist in 4002
-	const posts = await axios.get('http://localhost:4000/posts');
-
-	Object.values(posts.data).map((post) => {
-		if (
-			!postIds.some((p) => {
-				p.id === post.id;
-			})
-		) {
-			const event = {
-				type: 'PostCreated',
-				data: {
-					id: post.id,
-					title: post.title,
-				},
-			};
-			events.push(event);
-			console.log('4005 Sync post : ' + post.title);
-		}
-	});
+	// const posts = await axios.get('http://localhost:4000/posts');
+	axios
+		.get('http://localhost:4000/posts')
+		.then((posts) => {
+			if (posts) {
+				posts.data.map((post) => {
+					if (
+						!postIds.some((p) => {
+							p.id === post.id;
+						})
+					) {
+						const event = {
+							type: 'PostCreated',
+							data: {
+								id: post.id,
+								title: post.title,
+							},
+						};
+						events.push(event);
+						console.log('4005 Sync post : ' + post.title);
+					}
+				});
+			}
+		})
+		.catch((err) => {
+			console.log('can not connect to 4000');
+		});
 });
