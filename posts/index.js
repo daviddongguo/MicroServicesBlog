@@ -53,8 +53,8 @@ app.listen(4000, async () => {
 	console.log('Listen on 4000');
 
 	const postIds = [];
-	Object.values(posts).map((post) => {
-		postIds.push[post.id];
+	Object.entries(posts).map(([id, post]) => {
+		postIds.push[id];
 	});
 
 	axios
