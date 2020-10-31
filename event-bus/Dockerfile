@@ -9,6 +9,6 @@ RUN yarn install
 
 COPY . .
 
-CMD ["yarn", "start"]
+CMD ["yarn", "start", "index.js"]
 
 EXPOSE 4005

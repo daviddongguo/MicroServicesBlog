@@ -24,13 +24,18 @@ app.post('/posts', async (req, res) => {
 	};
 
 	// Save in Event Bus
-	await axios.post('http://event-bus-srv:4005/events', {
-		type: 'PostCreated',
-		data: {
-			id,
-			title,
-		},
-	});
+	axios
+		.post('http://event-bus-srv:4005/events', {
+			type: 'PostCreated',
+			data: {
+				id,
+				title,
+			},
+		})
+		.then()
+		.catch((err) => {
+			console.log('post events failed');
+		});
 
 	res.status(201).send(posts[id]);
 });
