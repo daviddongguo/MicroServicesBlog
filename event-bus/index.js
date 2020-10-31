@@ -8,14 +8,23 @@ app.use(bodyParser.json());
 const events = [];
 const syncEvent = (event) => {
 	events.push(event);
-	try {
-		axios.post('http://posts-clusterip-srv:4000/events', event); // for post
-		axios.post('http://comments-clusterip-srv:4001/events', event); // for comment
-		axios.post('http://query-clusterip-srv:4002/events', event); // for query
-		axios.post('http://moderation-clusterip-srv:4003/events', event); // for moderation
-	} catch (err) {
-		console.log('some service can not be connected.');
-	}
+
+	axios
+		.post('http://posts-clusterip-srv:4000/events', event)
+		.then()
+		.catch((err) => console.log('post to posts service failed')); // for post
+	axios
+		.post('http://comments-clusterip-srv:4001/events', event)
+		.then()
+		.catch((err) => console.log('post to comments service failed')); // for comment
+	axios
+		.post('http://query-clusterip-srv:4002/events', event)
+		.then()
+		.catch((err) => console.log('post to query service failed')); // for query
+	axios
+		.post('http://moderation-clusterip-srv:4003/events', event)
+		.then()
+		.catch((err) => console.log('post to moderation service failed')); // for moderation
 };
 
 app.post('/events', (req, res) => {
@@ -43,13 +52,14 @@ app.listen(4005, async () => {
 	//TODO: pull posts from 4000 save locally
 	// and push those posts that didn't exist in 4002
 	axios
-		.get('http://event-clusterip-srv:4000/posts')
+		.get('http://posts-clusterip-srv:4000/posts')
 		.then((posts) => {
 			if (posts) {
-				posts.data.map((post) => {
+				console.log('Received posts from 4000: ');
+				Object.entries(posts.data).map(([postId, post]) => {
 					if (
 						!postIds.some((p) => {
-							p.id === post.id;
+							p.id === postId;
 						})
 					) {
 						const event = {
