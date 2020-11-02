@@ -8,8 +8,23 @@ jobs:
       - echo "$DOCKER_USERNAME"
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t client ./client
+      - docker build -t posts ./posts
+      - docker build -t comments ./comments
+      - docker build -t event-bus ./event-bus
+      - docker build -t moderation ./moderation
+      - docker build -t query ./query
       - docker images
       - docker tag client $DOCKER_USERNAME/client
+      - docker tag posts $DOCKER_USERNAME/posts
+      - docker tag comments $DOCKER_USERNAME/comments
+      - docker tag event-bus $DOCKER_USERNAME/event-bus
+      - docker tag moderation $DOCKER_USERNAME/moderation
+      - docker tag query $DOCKER_USERNAME/query
       - docker images
       - docker push $DOCKER_USERNAME/client
+      - docker push $DOCKER_USERNAME/posts
+      - docker push $DOCKER_USERNAME/comments
+      - docker push $DOCKER_USERNAME/event-bus
+      - docker push $DOCKER_USERNAME/moderation
+      - docker push $DOCKER_USERNAME/query
 
