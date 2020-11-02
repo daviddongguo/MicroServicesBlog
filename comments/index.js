@@ -55,15 +55,19 @@ app.post('/events', async (req, res) => {
 		});
 		comment.status = status;
 
-		await axios.post('http://event-bus-srv:4005/events', {
-			type: 'CommentUpdated',
-			data: {
-				id,
-				postId,
-				content,
-				status,
-			},
-		});
+		axios
+			.post('http://event-bus-srv:4005/events', {
+				type: 'CommentUpdated',
+				data: {
+					id,
+					postId,
+					content,
+					status,
+				},
+			})
+			.catch(() => {
+				console.log('error catched in comments post CommentUpdated events');
+			});
 	}
 
 	res.send({});

@@ -42,8 +42,8 @@ app.post('/posts/create', async (req, res) => {
 
 app.post('/events', (req, res) => {
 	console.log('4000 Received Event: ', req.body.type);
-	if ((req.body.type = 'PostCreated')) {
-		const post = req.body.data;
+	if ((req.body.type = 'CommentUpdated')) {
+		const comment = req.body.data;
 	}
 
 	res.send({});
@@ -51,7 +51,7 @@ app.post('/events', (req, res) => {
 
 app.listen(4000, async () => {
 	console.log('Listen on 4000');
-	console.log('vesion 1.0.0');
+	console.log('version 1.0.0');
 
 	const postIds = [];
 	Object.entries(posts).map(([id, post]) => {
