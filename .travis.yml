@@ -5,9 +5,7 @@ jobs:
   include:
     - stage: build docker image
       script:
+      - cat "$DOCKER_USERNAME"
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t client ./client
-      - docker images
-      - docker tag client $DOCKER_USERNAME/client
-      - docker push $DOCKER_USERNAME/client
+
 
