@@ -1,9 +1,10 @@
-FROM node:apline
+FROM node:alpine
 
 ENV CI=true
 
-WORDDIR /app
+WORKDIR /app
 COPY package.json .
+COPY yarn.lock .
 
 RUN yarn install
 
