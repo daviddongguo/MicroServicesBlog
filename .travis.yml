@@ -5,7 +5,7 @@ jobs:
   include:
     - stage: build docker image
       script:
-      - cat "$DOCKER_USERNAME"
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - echo "$DOCKER_USERNAME"
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 
