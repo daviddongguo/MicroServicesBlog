@@ -13,3 +13,17 @@
 6 Kubernetes is a pain to setup, but makes it really easy to deploy + scale services.
 
 7 Skaffold handles the workflow for building, pushing, and deploying your application, and provides building blocks for creating CI/CD pipelines.
+
+Next:
+
+1. Build a central library as an NPM module to shar code between our different projects.
+
+2. Precisely define all of our events in this ahared library.
+
+3. Write everything in Typescript.
+
+4. Write tests for as much as possible/reasonable
+
+5. Run a k8s cluster in the cloud and develop on it almost as quickly as local
+
+6. Introduce a lot of code to handle concurrency issues.
