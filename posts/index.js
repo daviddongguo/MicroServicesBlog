@@ -51,6 +51,7 @@ app.post('/events', (req, res) => {
 
 app.listen(4000, async () => {
 	console.log('Listen on 4000');
+	console.log('vesion 1.0.0');
 
 	const postIds = [];
 	Object.entries(posts).map(([id, post]) => {
