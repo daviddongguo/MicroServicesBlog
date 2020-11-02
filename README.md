@@ -1,3 +1,10 @@
+Ad# Deployment
+
+- install minikube
+- install kubectl then minikube start --driver=docker. In this case, minikube can only be access by locally.
+- minikube addons enable ingress
+- install skaffold, run skaffold dev.
+
 # MicroServicesBlog
 
 1 Data is the big challenge in microservices.
